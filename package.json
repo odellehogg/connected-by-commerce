@@ -16,7 +16,7 @@
     "@sanity/vision": "^5.21.0",
     "next": "15.1.0",
     "next-mdx-remote": "^5.0.0",
-    "next-sanity": "^12.3.0",
+    "next-sanity": "^9.8.4",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-is": "^19.2.5",
