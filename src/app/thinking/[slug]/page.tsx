@@ -9,7 +9,7 @@ import { notFound } from 'next/navigation';
 import styles from './page.module.css';
 import type { Metadata } from 'next';
 
-interface Props { params: { slug: string } }
+type Props = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
   const slugs = await getAllPostSlugs().catch(() => []);
@@ -17,7 +17,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = await getPostBySlug(params.slug).catch(() => null);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug).catch(() => null);
   if (!post) return { title: 'Post not found' };
   return {
     title: `${post.title} — Connected × Commerce`,
@@ -26,26 +27,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// Custom components for Portable Text rendering
 const ptComponents = {
   types: {
     image: ({ value }: any) => (
       <figure className={styles.figure}>
-        <Image
-          src={urlFor(value).width(1200).url()}
-          alt={value.alt ?? ''}
-          width={1200}
-          height={675}
-          className={styles.figureImg}
-        />
+        <Image src={urlFor(value).width(1200).url()} alt={value.alt ?? ''} width={1200} height={675} className={styles.figureImg} />
         {value.caption && <figcaption className={styles.figureCaption}>{value.caption}</figcaption>}
       </figure>
     ),
   },
   marks: {
-    link: ({ value, children }: any) => (
-      <a href={value.href} target="_blank" rel="noopener noreferrer">{children}</a>
-    ),
+    link: ({ value, children }: any) => <a href={value.href} target="_blank" rel="noopener noreferrer">{children}</a>,
   },
   block: {
     h2: ({ children }: any) => <h2 className={styles.bodyH2}>{children}</h2>,
@@ -56,11 +48,8 @@ const ptComponents = {
 };
 
 const CATEGORY_LABELS: Record<string, string> = {
-  'retail-media': 'Retail Media',
-  'amazon': 'Amazon',
-  'uk-retail-networks': 'UK Retail Networks',
-  'strategy': 'Strategy',
-  'measurement': 'Measurement',
+  'retail-media': 'Retail Media', 'amazon': 'Amazon',
+  'uk-retail-networks': 'UK Retail Networks', 'strategy': 'Strategy', 'measurement': 'Measurement',
 };
 
 function formatDate(d: string) {
@@ -68,7 +57,8 @@ function formatDate(d: string) {
 }
 
 export default async function PostPage({ params }: Props) {
-  const post = await getPostBySlug(params.slug).catch(() => null);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug).catch(() => null);
   if (!post) notFound();
 
   return (
@@ -85,24 +75,14 @@ export default async function PostPage({ params }: Props) {
           <p className={styles.excerpt}>{post.excerpt}</p>
           <div className={styles.rule} />
         </header>
-
         {post.featuredImageUrl && (
           <div className={styles.featuredImage}>
-            <Image
-              src={post.featuredImageUrl}
-              alt={post.featuredImageAlt ?? post.title}
-              width={1440}
-              height={640}
-              className={styles.featuredImg}
-              priority
-            />
+            <Image src={post.featuredImageUrl} alt={post.featuredImageAlt ?? post.title} width={1440} height={640} className={styles.featuredImg} priority />
           </div>
         )}
-
         <article className={styles.body}>
           {post.body && <PortableText value={post.body} components={ptComponents} />}
         </article>
-
         <section className={styles.postFooter}>
           <div className={styles.postFooterInner}>
             <div>
