@@ -1,0 +1,21 @@
+.footer { padding: 96px 48px 40px; border-top: 1px solid var(--line); }
+.pre { padding-bottom: 72px; border-bottom: 1px solid var(--line); margin-bottom: 56px; }
+.pre h3 { font-family: var(--serif); font-size: clamp(36px,4.5vw,64px); font-weight: 300; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 28px; max-width: 900px; }
+.pre h3 em { font-style: italic; color: var(--fg-70); }
+.preRow { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
+.preRow p { font-family: var(--sans); font-weight: 300; font-size: 15px; line-height: 1.6; color: var(--fg-70); max-width: 420px; }
+.cols { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 64px; }
+.brandName { font-family: var(--serif); font-size: 17px; font-weight: 400; letter-spacing: -0.01em; margin-bottom: 14px; }
+.brandDesc { font-family: var(--sans); font-weight: 300; font-size: 14px; line-height: 1.65; color: var(--fg-70); max-width: 340px; }
+.cols h4 { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-55); margin-bottom: 16px; font-weight: 500; }
+.cols ul { list-style: none; }
+.cols ul li { padding: 5px 0; }
+.cols ul li a { font-family: var(--sans); font-size: 14px; color: var(--fg-70); transition: color 0.2s; }
+.cols ul li a:hover { color: var(--fg); }
+.mega { font-family: var(--serif); font-weight: 200; font-size: clamp(56px,12vw,180px); letter-spacing: -0.04em; line-height: 0.9; background: linear-gradient(180deg,rgba(255,255,255,0.22),rgba(255,255,255,0.04) 90%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin: 48px 0 40px; user-select: none; text-align: center; }
+.mega em { font-style: italic; font-weight: 300; }
+.bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 28px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 11px; color: var(--fg-55); letter-spacing: 0.08em; flex-wrap: wrap; gap: 16px; }
+.legal { display: flex; gap: 28px; }
+.legal a:hover { color: var(--fg); }
+@media (max-width: 900px) { .cols { grid-template-columns: 1fr 1fr; gap: 36px; } }
+@media (max-width: 600px) { .footer { padding: 72px 24px 32px; } .cols { grid-template-columns: 1fr; } .preRow { flex-direction: column; align-items: flex-start; } }

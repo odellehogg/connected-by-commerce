@@ -1,0 +1,29 @@
+.form { display: flex; flex-direction: column; gap: 24px; font-family: var(--sans); }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.form label { display: flex; flex-direction: column; gap: 8px; }
+.form label span, .chipLabel {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--fg-55); font-weight: 500;
+}
+.form input, .form textarea {
+  background: transparent; border: none; border-bottom: 1px solid var(--line);
+  padding: 10px 0; color: var(--fg); font-family: var(--sans); font-size: 15px;
+  outline: none; transition: border-color 0.2s; resize: vertical; width: 100%;
+}
+.form input:focus, .form textarea:focus { border-bottom-color: var(--fg); }
+.form input::placeholder, .form textarea::placeholder { color: var(--fg-35); }
+.chipGroup { display: flex; flex-direction: column; gap: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.fullWidth { width: 100%; }
+.submit { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 1px solid var(--line); margin-top: 8px; }
+.note { font-family: var(--mono); font-size: 10px; color: var(--fg-35); letter-spacing: 0.05em; }
+.success { text-align: center; padding: 48px 24px; }
+.tick { font-size: 40px; margin-bottom: 16px; }
+.success h3 { font-family: var(--serif); font-size: 28px; font-weight: 400; margin-bottom: 8px; }
+.success p { font-family: var(--sans); font-size: 15px; color: var(--fg-70); }
+.error { font-family: var(--sans); font-size: 14px; color: rgba(255,100,100,0.9); padding: 12px 0; }
+.error a { text-decoration: underline; }
+@media (max-width: 600px) {
+  .row { grid-template-columns: 1fr; gap: 20px; }
+  .submit { flex-direction: column; gap: 16px; align-items: flex-start; }
+}

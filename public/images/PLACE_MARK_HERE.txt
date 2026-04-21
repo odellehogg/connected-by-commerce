@@ -1,0 +1,8 @@
+Place your mark-only logo file here as: mark.png
+
+This should be the butterfly/X mark WITHOUT the "Connected x Commerce" wordmark text.
+It will be displayed at ~180-220px wide in the hero section.
+
+If you only have the full lockup (with text), place that here as mark.png and the
+wordmark text rendered below it in HTML will be redundant — consider hiding
+.heroWordmark in page.module.css in that case.
