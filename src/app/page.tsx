@@ -324,7 +324,7 @@ export default function Home() {
           <p style={{ fontSize: 'clamp(14px,1.5vw,16px)', color: 'rgba(255,255,255,0.5)', lineHeight: 1.72, maxWidth: '44ch', margin: '0 auto 52px' }}>
             A 30-minute call. We&apos;ll be straight with you about whether we can help — and what we&apos;d do first if the answer is yes.
           </p>
-          <a href="mailto:hello@connectedbycommerce.co.uk" style={{
+          <a href="mailto:info@connectedbycommerce.co.uk" style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             fontSize: 14, fontWeight: 700, letterSpacing: '-0.01em',
             color: 'var(--ink)', background: 'var(--white)',
@@ -333,7 +333,7 @@ export default function Home() {
             Book a call →
           </a>
           <div style={{ marginTop: 28, fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.2)' }}>
-            hello@connectedbycommerce.co.uk · connectedbycommerce.co.uk
+            info@connectedbycommerce.co.uk · connectedbycommerce.co.uk
           </div>
         </div>
       </section>
