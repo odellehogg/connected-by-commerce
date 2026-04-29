@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './page.module.css';
 
 const BLACK_LOGO = 'data:image/png;base64,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';
@@ -9,6 +9,7 @@ const MARK_PATH  = 'M705.999573,1188.500000 C705.999573,1209.281616 705.999573,1
 
 export default function Home() {
   const pageRef = useRef<HTMLDivElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     // Scroll fade-up
@@ -107,17 +108,6 @@ export default function Home() {
     };
   }, []);
 
-  const s: Record<string, React.CSSProperties> = {
-    // tokens
-    sans:   { fontFamily: 'var(--sans)' },
-    mono:   { fontFamily: 'var(--mono)' },
-    white:  { color: 'var(--white)' },
-    ink:    { color: 'var(--ink)' },
-    ink2:   { color: 'var(--ink2)' },
-    g5:     { color: 'var(--g5)' },
-    g7:     { color: 'var(--g7)' },
-  };
-
   return (
     <div ref={pageRef} style={{ fontFamily: 'var(--sans)' }}>
 
@@ -130,40 +120,61 @@ export default function Home() {
         justifyContent: 'space-between', transition: 'background 0.3s',
       }}>
         <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-          {/* Replace with <Image> using /images/mark-black.svg once exported from Canva */}
           <img src={BLACK_LOGO} alt="CxC" style={{ width: 26, height: 26 }} />
           <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--ink)' }}>
             Connected<span style={{ fontWeight: 300, color: 'var(--g5)', margin: '0 0.1em' }}>×</span>Commerce
           </span>
         </a>
-        <a href="#contact" style={{
-          fontSize: 12, fontWeight: 700, color: 'var(--white)', background: 'var(--ink)',
-          borderRadius: 100, padding: '9px 20px', textDecoration: 'none', transition: 'opacity 0.2s',
-        }}>Book a call</a>
+
+        {/* Desktop nav links */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
+          <a href="#framework" style={{ fontSize: 12, fontWeight: 500, color: 'var(--g7)', textDecoration: 'none', display: 'var(--nav-link-display, flex)' }}
+            className={styles.desktopOnly}>Framework</a>
+          <a href="#why" style={{ fontSize: 12, fontWeight: 500, color: 'var(--g7)', textDecoration: 'none' }}
+            className={styles.desktopOnly}>About</a>
+          <a href="#contact" style={{
+            fontSize: 12, fontWeight: 700, color: 'var(--white)', background: 'var(--ink)',
+            borderRadius: 100, padding: '9px 20px', textDecoration: 'none',
+          }}>Book a call</a>
+          {/* Hamburger */}
+          <button
+            className={styles.hamburger}
+            onClick={() => setMenuOpen(o => !o)}
+            aria-label="Toggle menu"
+          >
+            <span /><span /><span />
+          </button>
+        </div>
       </nav>
 
+      {/* Mobile menu */}
+      <div className={`${styles.mobileMenu} ${menuOpen ? styles.open : ''}`}>
+        <a href="#framework" onClick={() => setMenuOpen(false)}>Framework</a>
+        <a href="#why" onClick={() => setMenuOpen(false)}>About</a>
+        <a href="#contact" onClick={() => setMenuOpen(false)}>Book a call →</a>
+      </div>
+
       {/* §1 HERO */}
-      <section className={styles.fadeUp} style={{ padding: '148px var(--pad) 104px', maxWidth: 'var(--max)', margin: '0 auto' }}>
+      <section className={styles.fadeUp} style={{ padding: 'clamp(100px,12vw,148px) var(--pad) clamp(64px,8vw,104px)', maxWidth: 'var(--max)', margin: '0 auto' }}>
         <div style={{ fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--g5)', marginBottom: 36 }}>
           Commerce-first retail media
         </div>
         <h1 style={{
-          fontSize: 'clamp(46px, 6.5vw, 90px)', fontWeight: 800, letterSpacing: '-0.045em',
+          fontSize: 'clamp(38px, 6.5vw, 90px)', fontWeight: 800, letterSpacing: '-0.045em',
           lineHeight: 0.96, color: 'var(--ink)', maxWidth: '13ch', marginBottom: 40,
         }}>
           Most brands are buying media in{' '}
           <em style={{ fontStyle: 'italic', fontWeight: 300, color: 'var(--g5)' }}>the wrong order.</em>
         </h1>
-        <p style={{ fontSize: 'clamp(16px,1.8vw,19px)', color: 'var(--ink2)', lineHeight: 1.68, maxWidth: '52ch', marginBottom: 52 }}>
+        <p style={{ fontSize: 'clamp(15px,1.8vw,19px)', color: 'var(--ink2)', lineHeight: 1.68, maxWidth: '52ch', marginBottom: 52 }}>
           We start where your customers actually buy. Connected&nbsp;×&nbsp;Commerce is a UK retail media specialist — building commerce-first strategies for growth-stage brands on Amazon, Tesco, Boots, and Nectar360.
         </p>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
+        <div className={styles.heroCta}>
           <a href="#contact" style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             fontSize: 14, fontWeight: 700, letterSpacing: '-0.01em',
             color: 'var(--white)', background: 'var(--ink)',
             borderRadius: 100, padding: '15px 28px', textDecoration: 'none',
-            transition: 'transform 0.2s, box-shadow 0.2s',
           }}>
             Book a free 30-minute call →
           </a>
@@ -176,76 +187,64 @@ export default function Home() {
       <hr style={{ border: 'none', borderTop: '1px solid var(--g2)' }} />
 
       {/* §2 THE SHIFT */}
-      <section style={{ borderBottom: '1px solid var(--g2)', padding: '84px var(--pad)', background: 'var(--paper)' }}>
-        <div style={{ maxWidth: 'var(--max)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'clamp(160px,220px,220px) 1fr', gap: 72, alignItems: 'start' }}>
-          <div className={styles.fadeUp} style={{ fontSize: 'clamp(20px,2.6vw,32px)', fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1.1 }}>
-            The third wave of media{' '}
-            <em style={{ fontStyle: 'italic', fontWeight: 300, color: 'var(--g5)' }}>is already here.</em>
-          </div>
-          <div className={styles.fadeUp} style={{ fontSize: 17, color: 'var(--ink2)', lineHeight: 1.78 }}>
-            <p>Broadcast reach, digital performance, and now retail media — the only channel where you can reach customers at the exact moment of purchase, using first-party loyalty data, with closed-loop attribution.</p>
-            <p style={{ marginTop: 18 }}>Tesco&apos;s 27 million Clubcard members. 20 million Nectar holders. 17 million Boots Advantage cardholders. Most growth brands aren&apos;t on any of them. That&apos;s the opportunity — and it won&apos;t stay cheap for long.</p>
+      <section style={{ borderBottom: '1px solid var(--g2)', padding: 'clamp(48px,7vw,84px) var(--pad)', background: 'var(--paper)' }}>
+        <div style={{ maxWidth: 'var(--max)', margin: '0 auto' }}>
+          <div className={`${styles.fadeUp} ${styles.shiftGrid}`}>
+            <div style={{ fontSize: 'clamp(18px,2.6vw,32px)', fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1.1 }}>
+              The third wave of media{' '}
+              <em style={{ fontStyle: 'italic', fontWeight: 300, color: 'var(--g5)' }}>is already here.</em>
+            </div>
+            <div style={{ fontSize: 'clamp(14px,1.5vw,17px)', color: 'var(--ink2)', lineHeight: 1.78 }}>
+              <p>Broadcast reach, digital performance, and now retail media — the only channel where you can reach customers at the exact moment of purchase, using first-party loyalty data, with closed-loop attribution.</p>
+              <p style={{ marginTop: 18 }}>Tesco&apos;s 27 million Clubcard members. 20 million Nectar holders. 17 million Boots Advantage cardholders. Most growth brands aren&apos;t on any of them. That&apos;s the opportunity — and it won&apos;t stay cheap for long.</p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* §3 FRAMEWORK */}
-      <section id="framework" style={{ padding: '100px var(--pad)', maxWidth: 'var(--max)', margin: '0 auto' }}>
-        <div className={styles.fadeUp} style={{ marginBottom: 72 }}>
+      <section id="framework" style={{ padding: 'clamp(64px,8vw,100px) var(--pad)', maxWidth: 'var(--max)', margin: '0 auto' }}>
+        <div className={styles.fadeUp} style={{ marginBottom: 56 }}>
           <div style={{ fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--g5)', marginBottom: 28 }}>The CBC framework</div>
-          <h2 style={{ fontSize: 'clamp(28px,3.5vw,46px)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.04 }}>
+          <h2 style={{ fontSize: 'clamp(24px,3.5vw,46px)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.04 }}>
             Four principles.{' '}
             <em style={{ fontStyle: 'italic', fontWeight: 300, color: 'var(--g5)' }}>One journey.</em>
           </h2>
         </div>
 
-        <div className={styles.fadeUp} style={{ width: '100%' }}>
-          <svg id="fwDiagram" viewBox="0 0 1000 520" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', display: 'block', overflow: 'visible' }}>
+        <div className={styles.fadeUp}>
+          {/* Desktop SVG diagram */}
+          <svg id="fwDiagram" viewBox="0 0 1000 520" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.fwDiagram}>
             <defs>
               <clipPath id="fwClip">
                 <path d={`${MARK_PATH}Z`} transform="translate(195.3,-29.3) scale(0.3041)" />
               </clipPath>
             </defs>
-
-            {/* Mark body */}
             <path d={`${MARK_PATH}Z`} transform="translate(195.3,-29.3) scale(0.3041)" fill="#E5E5E5" />
-
-            {/* Quadrant highlights */}
             <rect id="fwQ1" x="385" y="155" width="120" height="100" fill="#0A0A0A" opacity="0" clipPath="url(#fwClip)" style={{ transition: 'opacity 0.5s ease' }} />
             <rect id="fwQ2" x="490" y="155" width="120" height="100" fill="#0A0A0A" opacity="0" clipPath="url(#fwClip)" style={{ transition: 'opacity 0.5s ease' }} />
             <rect id="fwQ3" x="385" y="285" width="120" height="100" fill="#0A0A0A" opacity="0" clipPath="url(#fwClip)" style={{ transition: 'opacity 0.5s ease' }} />
             <rect id="fwQ4" x="490" y="285" width="120" height="100" fill="#0A0A0A" opacity="0" clipPath="url(#fwClip)" style={{ transition: 'opacity 0.5s ease' }} />
-
-            {/* Crosshair */}
             <line x1="385" y1="260" x2="615" y2="260" stroke="#8A8A8A" strokeWidth="1" strokeDasharray="5,5" opacity="0.5" />
             <line x1="500" y1="158" x2="500" y2="370" stroke="#8A8A8A" strokeWidth="1" strokeDasharray="5,5" opacity="0.5" />
-
-            {/* Funnel bands */}
             <text x="500" y="134" textAnchor="middle" fontFamily="var(--mono)" fontSize="9" letterSpacing="3" fill="#8A8A8A" opacity="0.7">UPPER FUNNEL</text>
             <text x="500" y="402" textAnchor="middle" fontFamily="var(--mono)" fontSize="9" letterSpacing="3" fill="#8A8A8A" opacity="0.7">LOWER FUNNEL</text>
-
-            {/* Discovery — top-left */}
             <g id="lbl-discovery" opacity="0.35" style={{ transition: 'opacity 0.4s ease', cursor: 'default' }}>
               <text x="258" y="78" textAnchor="middle" fontFamily="var(--mono)" fontSize="9" letterSpacing="2" fill="#8A8A8A">01 · UPPER FUNNEL</text>
               <text x="258" y="102" textAnchor="middle" fontFamily="var(--sans)" fontSize="28" fontWeight="800" letterSpacing="-1.5" fill="#0A0A0A">Discovery</text>
             </g>
-            {/* Demand — top-right */}
             <g id="lbl-demand" opacity="0.35" style={{ transition: 'opacity 0.4s ease', cursor: 'default' }}>
               <text x="740" y="78" textAnchor="middle" fontFamily="var(--mono)" fontSize="9" letterSpacing="2" fill="#8A8A8A">02 · UPPER FUNNEL</text>
               <text x="740" y="102" textAnchor="middle" fontFamily="var(--sans)" fontSize="28" fontWeight="800" letterSpacing="-1.5" fill="#0A0A0A">Demand</text>
             </g>
-            {/* Convert — bottom-left */}
             <g id="lbl-convert" opacity="0.35" style={{ transition: 'opacity 0.4s ease', cursor: 'default' }}>
               <text x="258" y="388" textAnchor="middle" fontFamily="var(--sans)" fontSize="28" fontWeight="800" letterSpacing="-1.5" fill="#0A0A0A">Convert</text>
               <text x="258" y="410" textAnchor="middle" fontFamily="var(--mono)" fontSize="9" letterSpacing="2" fill="#8A8A8A">03 · LOWER FUNNEL</text>
             </g>
-            {/* Loyalty — bottom-right */}
             <g id="lbl-loyalty" opacity="0.35" style={{ transition: 'opacity 0.4s ease', cursor: 'default' }}>
               <text x="740" y="388" textAnchor="middle" fontFamily="var(--sans)" fontSize="28" fontWeight="800" letterSpacing="-1.5" fill="#0A0A0A">Loyalty</text>
               <text x="740" y="410" textAnchor="middle" fontFamily="var(--mono)" fontSize="9" letterSpacing="2" fill="#8A8A8A">04 · LOWER FUNNEL</text>
             </g>
-
-            {/* Descriptions */}
             <text id="desc-discovery" x="258" y="0" textAnchor="middle" fontFamily="var(--sans)" fontSize="12.5" fill="#545454" opacity="0" style={{ transition: 'opacity 0.4s ease' }}>
               <tspan x="258" dy="0">Making your brand visible to shoppers</tspan>
               <tspan x="258" dy="17">who don&apos;t yet know you exist — browse</tspan>
@@ -267,29 +266,43 @@ export default function Home() {
               <tspan x="740" dy="17">strategy, compounding LTV over time.</tspan>
             </text>
           </svg>
+
+          {/* Mobile fallback grid */}
+          <div className={styles.fwMobile}>
+            {[
+              { i: '01', f: 'Upper', t: 'Discovery', d: 'Making your brand visible to shoppers who don\'t yet know you exist — browse placements, prospecting, category capture.' },
+              { i: '02', f: 'Upper', t: 'Demand', d: 'Converting visibility into active interest. Retargeting, product content, consistent presence across every retail touchpoint.' },
+              { i: '03', f: 'Lower', t: 'Convert', d: 'The moment of purchase. Sponsored placements, retail search, Google Shopping — optimised for high-intent capture.' },
+              { i: '04', f: 'Lower', t: 'Loyalty', d: 'What happens after the first purchase. Lapsed-buyer campaigns, repeat-purchase strategy, compounding LTV over time.' },
+            ].map(item => (
+              <div key={item.i} className={styles.fwCard}>
+                <div className={styles.fwCardIndex}>{item.i} · {item.f} funnel</div>
+                <div className={styles.fwCardTitle}>{item.t}</div>
+                <p className={styles.fwCardDesc}>{item.d}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       <hr style={{ border: 'none', borderTop: '1px solid var(--g2)' }} />
 
       {/* §4 WHY CBC */}
-      <section id="why" style={{ background: 'var(--ink)', padding: '100px var(--pad)' }}>
+      <section id="why" style={{ background: 'var(--ink)', padding: 'clamp(64px,8vw,100px) var(--pad)' }}>
         <div style={{ maxWidth: 'var(--max)', margin: '0 auto' }}>
           <div style={{ fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: 28 }}>Why Connected × Commerce</div>
-          <h2 className={styles.fadeUp} style={{ fontSize: 'clamp(30px,4vw,52px)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.04, color: 'var(--white)', marginBottom: 64, maxWidth: '20ch' }}>
+          <h2 className={styles.fadeUp} style={{ fontSize: 'clamp(26px,4vw,52px)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.04, color: 'var(--white)', marginBottom: 48, maxWidth: '20ch' }}>
             Three things you won&apos;t get{' '}
             <em style={{ fontStyle: 'italic', fontWeight: 300, color: 'rgba(255,255,255,0.4)' }}>anywhere else.</em>
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+          <div className={styles.whyGrid}>
             {[
               { n:'01', t:'Specialist depth', b:"Not a generalist agency bolting retail media on. We do three things well — retail media, paid social that feeds it, and the strategy to connect them. Not twelve things adequately." },
               { n:'02', t:'Honest measurement', b:"Cross-platform attribution is messy. We refuse to pretend otherwise. Three measurement layers, no theatre. You'll know what's working — even when the answer is inconvenient." },
               { n:'03', t:'Founder-led work', b:"You talk to the person doing the thinking — not an account handler passing briefs to a junior. That's the model. It's not a positioning line, it's the way we work." },
             ].map((item, i) => (
-              <div key={item.n} className={styles.fadeUp} style={{
-                padding: '40px 40px 40px 0',
+              <div key={item.n} className={`${styles.fadeUp} ${styles.whyItem}`} style={{
                 borderRight: i < 2 ? '1px solid rgba(255,255,255,0.1)' : 'none',
-                paddingLeft: i > 0 ? 40 : 0,
               }}>
                 <div style={{ fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: '0.2em', color: 'rgba(255,255,255,0.25)', marginBottom: 18 }}>{item.n}</div>
                 <div style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--white)', marginBottom: 12 }}>{item.t}</div>
@@ -301,14 +314,14 @@ export default function Home() {
       </section>
 
       {/* §5 CTA CLOSE */}
-      <section id="contact" style={{ background: 'var(--black)', padding: '128px var(--pad)', textAlign: 'center' }}>
+      <section id="contact" style={{ background: 'var(--black)', padding: 'clamp(72px,10vw,128px) var(--pad)', textAlign: 'center' }}>
         <div style={{ maxWidth: 640, margin: '0 auto' }}>
           <div style={{ fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginBottom: 44 }}>Let&apos;s talk</div>
-          <h2 className={styles.fadeUp} style={{ fontSize: 'clamp(36px,5.5vw,72px)', fontWeight: 800, letterSpacing: '-0.045em', lineHeight: 0.96, color: 'var(--white)', marginBottom: 28 }}>
+          <h2 className={styles.fadeUp} style={{ fontSize: 'clamp(32px,5.5vw,72px)', fontWeight: 800, letterSpacing: '-0.045em', lineHeight: 0.96, color: 'var(--white)', marginBottom: 28 }}>
             Start where your customers{' '}
             <em style={{ fontStyle: 'italic', fontWeight: 300, color: 'rgba(255,255,255,0.4)' }}>actually buy.</em>
           </h2>
-          <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.5)', lineHeight: 1.72, maxWidth: '44ch', margin: '0 auto 52px' }}>
+          <p style={{ fontSize: 'clamp(14px,1.5vw,16px)', color: 'rgba(255,255,255,0.5)', lineHeight: 1.72, maxWidth: '44ch', margin: '0 auto 52px' }}>
             A 30-minute call. We&apos;ll be straight with you about whether we can help — and what we&apos;d do first if the answer is yes.
           </p>
           <a href="mailto:hello@connectedbycommerce.co.uk" style={{
@@ -316,7 +329,6 @@ export default function Home() {
             fontSize: 14, fontWeight: 700, letterSpacing: '-0.01em',
             color: 'var(--ink)', background: 'var(--white)',
             borderRadius: 100, padding: '15px 28px', textDecoration: 'none',
-            transition: 'transform 0.2s, box-shadow 0.2s',
           }}>
             Book a call →
           </a>
@@ -328,14 +340,14 @@ export default function Home() {
 
       {/* FOOTER */}
       <footer style={{ background: 'var(--black)', borderTop: '1px solid rgba(255,255,255,0.07)', padding: '28px var(--pad)' }}>
-        <div style={{ maxWidth: 'var(--max)', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
+        <div style={{ maxWidth: 'var(--max)', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
             <img src={WHITE_LOGO} alt="CxC" style={{ width: 20, height: 20, opacity: 0.5 }} />
             <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '-0.01em', color: 'rgba(255,255,255,0.35)' }}>
               Connected<span style={{ fontWeight: 300, margin: '0 0.1em' }}>×</span>Commerce
             </span>
           </div>
-          <div style={{ display: 'flex', gap: 22 }}>
+          <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
             {['Framework', 'About', 'Contact'].map((l, i) => (
               <a key={l} href={['#framework','#why','#contact'][i]} style={{ fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)' }}>{l}</a>
             ))}
